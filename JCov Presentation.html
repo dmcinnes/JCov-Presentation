@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+  <head>
+    <title>Presentation</title>
+
+    <meta charset='utf-8'>
+    <script
+      src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+  </head>
+  
+  <style>
+    /* Your individual styles here, or just use inline styles if that’s
+       what you want. */
+    
+    
+  </style>
+
+  <body style='display: none'>
+
+    <section class='slides layout-regular'>
+      
+      <!-- Your slides (<article>s) go here. Delete or comment out the
+           slides below. -->
+
+      <article>
+        <h1>
+          Javascript Testing on YellowPages.com
+        </h1>
+        <p>
+          <br>
+          Doug McInnes
+          <br>
+          AT&amp;T Interactive
+          <br>
+          @DougMcInnes
+          <br>
+          <a href="http://dougmcinnes.com">dougmcinnes.com</a>
+        </p>
+      </article>
+
+      <article>
+        <h3>
+          We Love Testing!
+        </h3>
+        <ul>
+          <li>
+            Rspec/rcov
+          </li>
+          <li>
+            Cucumber
+          </li>
+          <li>
+            Selenium
+          </li>
+          <li>
+            yard:cov
+          </li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>
+          Continuous Integration with Hudson
+        </h3>
+        <p>
+          <img class='centered' src='skunk.jpg'>
+        </p>
+        <h2 class="red">
+          Whomever broke the build gets the Skunk!
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          Javascript is Code too!
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+          A Little History
+        </h3>
+        <ul>
+          <li>
+            BlueRidge/ScrewUnit - Rhino (Java)
+          </li>
+          <li>
+            Jspec - Rhino (Java)
+          </li>
+        </ul>
+      </article>
+
+      <article>
+        <h2>
+          JCov - TheRubyRacer (Ruby/V8/JSpec)
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+          What about the browser?
+        </h3>
+        <h2>
+          env.js
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+          And now some code
+        </h3>
+        <section>
+        <pre>
+// mean.js
+
+Math.mean = function (array) {
+  var sum = 0;
+  for (var i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+
+  return sum / array.length;
+};
+</pre>
+        </section>
+      </article>
+
+      <article>
+        <h3>
+          And the test!
+        </h3>
+        <section>
+        <pre>
+describe("mean prototype", function () {
+  before(function () {
+    load('public/javascripts/mean.js');
+  });
+
+  describe("Math.prototype.mean", function () {
+    it("returns the average for an array of numbers", function () {
+      expect(Math.mean([1,2,3,4,5])).to(equal, 3)
+    });
+  });
+});
+</pre>
+        </section>
+      </article>
+
+      <article>
+        <h3>
+          Or...
+        </h3>
+        <section>
+        <pre>
+describe 'mean prototype'
+  before
+    load('public/javascripts/mean.js')
+  end
+
+  describe "Math.prototype.mean"
+    it "returns the average for an array of numbers"
+      Math.mean([1,2,3,4,5]).should.equal 3
+    end
+  end
+end
+</pre>
+        </section>
+      </article>
+
+      <article>
+        <h2>
+          We enforce 100% Rspec test coverage on our codebase.
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          Let's measure test coverage on our Javascript too!
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+          How does it work?
+        </h3>
+<pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;File.load()&nbsp;+-------&gt;&nbsp;RKelly&nbsp;parse
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;render&nbsp;back&nbsp;to&nbsp;Javascript
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(with&nbsp;line&nbsp;callbacks)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+
+&nbsp;&nbsp;&nbsp;&nbsp;Ruby&nbsp;Land&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+&nbsp;&nbsp;&lt;---------------------|--------------|--------------------&gt;
+&nbsp;&nbsp;&lt;---------------------|--------------|--------------------&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;Javascript&nbsp;Land&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load(...)+--+&nbsp;&lt;------------+
+
+</pre>
+        
+        <p>
+          Made with <a href="http://www.asciiflow.com/">http://www.asciiflow.com/</a>
+        </p>
+      </article>
+
+      <article>
+      <h3>
+        RKelly generates:
+      </h3>
+      <pre>
+                         // mean.js
+
+_jcov_line('mean.js', 2); Math.mean = function (array) {
+_jcov_line('mean.js', 3);   var sum = 0;
+_jcov_line('mean.js', 4);   for (var i = 0; i < array.length; i++) {
+_jcov_line('mean.js', 5);     sum += array[i];
+                           }
+
+_jcov_line('mean.js', 8);   return sum / array.length;
+                         };
+      </pre>
+      </article>
+
+      <article>
+        <h3>
+          Configuration!
+          <br>
+          jcov.yml
+        </h3>
+        <pre>
+-----
+threshold: 75.2
+threshold_must_match: true
+runner: jspec/runner.js
+ignore:
+  - vendor
+  - lib
+  - foo/bar/baz/wurble.js
+        </pre>
+      </article>
+
+      <article>
+        <h2>
+          Whither Jasmine?
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+          JCov Javascript API
+        </h3>
+        <pre>
+
+// Javascript Land
+
+load()   // loads and executes a javscript file
+print()  // prints stuff
+putc()   // prints a single char without a carrage return
+
+JCov.tests   // the list of test files to execute
+JCov.config  // configuration
+JCov.options // runtime options
+        </pre>
+      </article>
+
+      <article>
+        <h2>
+          And now for the live portion of our program...
+        </h2>
+      </article>
+
+      <article>
+        <h1>
+          Thank you!
+        </h1>
+        <h2>
+          Watch this space: <a href="https://github.com/attinteractive">https://github.com/attinteractive</a>
+        </h2>
+      </article>
+
+    </section>
+
+  </body>
+</html>
