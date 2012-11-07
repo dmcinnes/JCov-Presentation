@@ -1,5 +1,5 @@
 ---
-test_directory: tests
+test_directory:   tests
 source_directory: javascripts
-test_runner: jasmine/runner.js
-error_field: results
+test_runner:      jasmine/runner.js
+error_field:      results

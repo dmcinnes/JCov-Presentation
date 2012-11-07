@@ -1,4 +1,5 @@
 var exports = {};
+
 var setTimeout    = function () {};
 var clearTimeout  = function () {};
 var setInterval   = function () {};
