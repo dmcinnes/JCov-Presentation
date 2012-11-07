@@ -17,8 +17,7 @@
     <title>Presentation</title>
 
     <meta charset='utf-8'>
-    <script
-      src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+    <script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
   </head>
   
   <style>
@@ -37,13 +36,13 @@
 
       <article>
         <h1>
-          Javascript Testing on YellowPages.com
+          JCov: Javascript Test Coverage with Ruby
         </h1>
         <p>
           <br>
           Doug McInnes
           <br>
-          AT&amp;T Interactive
+          YP.com
           <br>
           @DougMcInnes
           <br>
@@ -52,34 +51,32 @@
       </article>
 
       <article>
-        <h3>
-          We Love Testing!
-        </h3>
-        <ul>
-          <li>
-            Rspec/rcov
-          </li>
-          <li>
-            Cucumber
-          </li>
-          <li>
-            Selenium
-          </li>
-          <li>
-            yard:cov
-          </li>
-        </ul>
+        <h2>
+          Yellowpages.com
+        </h2>
       </article>
 
       <article>
-        <h3>
-          Continuous Integration with Hudson
-        </h3>
-        <p>
-          <img class='centered' src='skunk.jpg'>
-        </p>
-        <h2 class="red">
-          Whomever broke the build gets the Skunk!
+        <h2>
+          A Very (very) Large Ruby on Rails App
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          RSpec
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          Ratio Javascript : Ruby =~ 0.8
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          8 lines of Javascript For every 10 lines of Ruby Code
         </h2>
       </article>
 
@@ -90,105 +87,35 @@
       </article>
 
       <article>
-        <h3>
-          A Little History
-        </h3>
-        <ul>
-          <li>
-            BlueRidge/ScrewUnit - Rhino (Java)
-          </li>
-          <li>
-            Jspec - Rhino (Java)
-          </li>
-        </ul>
-      </article>
-
-      <article>
         <h2>
-          JCov - TheRubyRacer (Ruby/V8/JSpec)
-        </h2>
-      </article>
-
-      <article>
-        <h3>
-          What about the browser?
-        </h3>
-        <h2>
-          env.js
-        </h2>
-      </article>
-
-      <article>
-        <h3>
-          And now some code
-        </h3>
-        <section>
-        <pre>
-// mean.js
-
-Math.mean = function (array) {
-  var sum = 0;
-  for (var i = 0; i < array.length; i++) {
-    sum += array[i];
-  }
-
-  return sum / array.length;
-};
-</pre>
-        </section>
-      </article>
-
-      <article>
-        <h3>
-          And the test!
-        </h3>
-        <section>
-        <pre>
-describe("mean prototype", function () {
-  before(function () {
-    load('public/javascripts/mean.js');
-  });
-
-  describe("Math.prototype.mean", function () {
-    it("returns the average for an array of numbers", function () {
-      expect(Math.mean([1,2,3,4,5])).to(equal, 3)
-    });
-  });
-});
-</pre>
-        </section>
-      </article>
-
-      <article>
-        <h3>
-          Or...
-        </h3>
-        <section>
-        <pre>
-describe 'mean prototype'
-  before
-    load('public/javascripts/mean.js')
-  end
-
-  describe "Math.prototype.mean"
-    it "returns the average for an array of numbers"
-      Math.mean([1,2,3,4,5]).should.equal 3
-    end
-  end
-end
-</pre>
-        </section>
-      </article>
-
-      <article>
-        <h2>
-          We enforce 100% Rspec test coverage on our codebase.
+          JCov
         </h2>
       </article>
 
       <article>
         <h2>
-          Let's measure test coverage on our Javascript too!
+          Headless
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          FAST
+        </h2>
+        <h3>
+          TheRubyRacer (Ruby/V8)
+        </h3>
+      </article>
+
+      <article>
+        <h2>
+          Test Framework Agnostic
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+          Code Coverage!
         </h2>
       </article>
 
@@ -221,6 +148,50 @@ end
       </article>
 
       <article>
+        <h3>
+          And now some code
+        </h3>
+        <section>
+        <pre>
+// mean.js
+
+Math.mean = function (array) {
+  var sum = 0;
+  for (var i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+
+  return sum / array.length;
+};
+</pre>
+        </section>
+      </article>
+
+      <article>
+        <h3>
+          And the test!
+        </h3>
+        <section>
+        <pre>
+describe("mean prototype", function () {
+
+  load("javascripts/mean.js");
+
+  describe("Math.prototype.mean", function () {
+    it("returns the average for an array of numbers", function () {
+      expect(Math.mean([1,2,3,4,5,12])).toEqual(4.5);
+    });
+
+    it("returns 0 for empty arrays", function () {
+      expect(Math.mean([])).toEqual(0);
+    });
+  });
+});
+</pre>
+        </section>
+      </article>
+
+      <article>
       <h3>
         RKelly generates:
       </h3>
@@ -246,9 +217,12 @@ _jcov_line('mean.js', 8);   return sum / array.length;
         </h3>
         <pre>
 -----
-threshold: 75.2
+threshold:            75.2
 threshold_must_match: true
-runner: jspec/runner.js
+test_directory:       tests
+source_directory:     javascripts
+test_runner:          jasmine/runner.js
+error_field:          results
 ignore:
   - vendor
   - lib
@@ -258,8 +232,11 @@ ignore:
 
       <article>
         <h2>
-          Whither Jasmine?
+          Runner file
         </h2>
+        <h3>
+          where the rubber meets the road
+        </h3>
       </article>
 
       <article>
@@ -270,14 +247,26 @@ ignore:
 
 // Javascript Land
 
-load()   // loads and executes a javscript file
-print()  // prints stuff
-putc()   // prints a single char without a carrage return
+JCov.tests   // An Array of tests to execute.
+JCov.config  // The configuration loaded from jcov.yaml.
+JCov.options // Passed in command line options.
 
-JCov.tests   // the list of test files to execute
-JCov.config  // configuration
-JCov.options // runtime options
+print()      // Print to the console.
+println()    // Print to the console with a carriage return.
+load()       // load and execute the given file.
+readFile()   // load file and return it as a string.
+putc()       // Print a single character to the console.
+
         </pre>
+      </article>
+
+      <article>
+        <h3>
+          What about the browser?
+        </h3>
+        <h2>
+          env.js
+        </h2>
       </article>
 
       <article>
@@ -291,7 +280,10 @@ JCov.options // runtime options
           Thank you!
         </h1>
         <h2>
-          Watch this space: <a href="https://github.com/attinteractive">https://github.com/attinteractive</a>
+          gem install jcov
+        </h2>
+        <h2>
+          <a href="https://github.com/yp-engineering/jcov">https://github.com/yp-engineering/jcov</a>
         </h2>
       </article>
 
