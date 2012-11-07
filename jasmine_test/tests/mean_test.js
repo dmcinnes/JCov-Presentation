@@ -7,8 +7,8 @@ describe("mean.js", function () {
       expect(Math.mean([1,2,3,4,5,12])).toEqual(4.5);
     });
 
-    it("returns 0 for empty arrays", function () {
-      expect(Math.mean([])).toEqual(0);
+    it("returns undefined for empty arrays", function () {
+      expect(Math.mean([])).toBeUndefined();
     });
   });
 });
